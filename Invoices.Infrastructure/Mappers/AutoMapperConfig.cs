@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Invoices.Core.Domain;
 using Invoices.Infrastructure.DTO;
+using Invoices.Infrastructure.Commands.Company;
 
 namespace Invoices.Infrastructure.Mappers
 {
@@ -11,9 +12,10 @@ namespace Invoices.Infrastructure.Mappers
     {
         public static IMapper Initialize()
             => new MapperConfiguration(cfg => {
-                cfg.CreateMap<Company, CompanyDTO>();
+                cfg.CreateMap<CompanyDTO, Company>();
                 cfg.CreateMap<Product, ProductDTO>();
                 cfg.CreateMap<Contractor, ContractorDTO>();
+                cfg.CreateMap<CreateCompany, CompanyDTO>();
             })
             .CreateMapper();
     }

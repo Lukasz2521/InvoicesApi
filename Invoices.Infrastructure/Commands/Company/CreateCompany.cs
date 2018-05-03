@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Invoices.Core.Domain
+namespace Invoices.Infrastructure.Commands.Company
 {
-    public class Company
+    public class CreateCompany : ICommand
     {
-        public int Id { get; set; }
-
         public string CompanyName { get; set; }
 
         public string Nip { get; set; }

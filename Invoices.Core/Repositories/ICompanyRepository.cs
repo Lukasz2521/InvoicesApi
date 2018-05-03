@@ -9,6 +9,6 @@ namespace Invoices.Core.Repositories
     {
         Company Get(int id);
 
-
+        void Add(Company company);
     }
 }

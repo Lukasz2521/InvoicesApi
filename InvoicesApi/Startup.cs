@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Invoices.Infrastructure.Repositories;
 using Invoices.Core.Repositories;
 using Invoices.Infrastructure.Mappers;
+using Invoices.Infrastructure.Services;
 
 namespace InvoicesApi
 {
@@ -26,10 +27,13 @@ namespace InvoicesApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IContractorRepository, ContractorRepository>();
+            services.AddScoped<ICompanyService, CompanyService>();
             services.AddSingleton(AutoMapperConfig.Initialize());
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddMvc();
         }
 
@@ -38,6 +42,10 @@ namespace InvoicesApi
         {
             if (env.IsDevelopment())
             {
+                app.UseCors(builder =>
+                    builder.WithOrigins("http://localhost:50823")
+                           .AllowAnyHeader()
+                    );
                 app.UseDeveloperExceptionPage();
             }
 
