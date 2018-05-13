@@ -5,34 +5,37 @@ using Invoices.Core.Domain;
 using Invoices.Core.Repositories;
 using Dapper;
 using Invoices.Infrastructure.DTO;
+using System.Threading.Tasks;
 
 namespace Invoices.Infrastructure.Repositories
 {
     public class CompanyRepository : BaseRespository, ICompanyRepository
     {
-        public void Add(Company company)
+        public async Task Add(Company company)
         {
-           Execute("INSERT INTO Company(Nip, CompanyName) VALUES(@Nip, @CompanyName);", new { Nip = company.Nip, CompanyName = company.CompanyName });
+           await Execute("INSERT INTO Company(Nip, CompanyName) VALUES(" +
+               "@Nip, @CompanyName, @Adress, @Email, @Tel, " +
+               "@Website, @Krs, @BankName, @AccountNr, @SwiftNr" +
+               ");", 
+               new {                 
+                   Nip = company.Nip,
+                   CompanyName = company.CompanyName,
+                   Adress = company.Adress   ,
+                   Email = company.Email,
+                   Tel = company.Tel,
+                   Website = company.Site,
+                   Krs = company.Krs,
+                   BankName = company.BankName,
+                   AccountNr = company.AccountNr,
+                   SwiftNr = company.SwiftNr,
+               });
         }
 
-        public Company Get(int id)
+        public async Task<Company> Get(int id)
         {
-            //Query<CompanyDTO>("SELECT * FROM Company WHERE id = @id", new { id });
+            var company = await QuerySingle<Company>("SELECT * FROM Company WHERE id = @id", new { id });
 
-            return new Company()
-            {
-                BankName = "Ing",
-                AccountNr = "72347236427364723",
-                Adress = "qwewqe",
-                CompanyName = "qeweq",
-                Email = "dsdsad@wp.pl",
-                Id = 1,
-                Krs = "4534534",
-                Site = "dffsdfsd",
-                Nip = "1111111111",
-                Tel = "32423423",
-                SwiftNr = "fdssdfsfsd"
-            };
+            return company;
         }
     }
 }

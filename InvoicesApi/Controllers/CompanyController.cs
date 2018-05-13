@@ -12,9 +12,7 @@ using AutoMapper;
 
 namespace Invoices.Api.Controllers
 {
-    //[Produces("application/json")]
-    //[Route("[controller]")]
-
+    [Route("company/[action]")]
     public class CompanyController : Controller
     {
         private readonly ICompanyService _companyService;
@@ -31,9 +29,29 @@ namespace Invoices.Api.Controllers
 
         [HttpPost]
         [Route("company/add")]
-        public void Post([FromBody]CreateCompany company)
+        public async Task Post([FromBody]CreateCompany company)
         {
-            _companyService.Add(_mapper.Map<CreateCompany, CompanyDTO>(company));
+            await _companyService.Add( _mapper.Map<CreateCompany, CompanyDTO>(company));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var company = await _companyService.Get(id);
+            if (company == null)                                                                                                 
+                return NotFound();
+
+            return Ok(_mapper.Map<CompanyDTO, GetCompany>(company)); 
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            //var company = _mapper.Map<CompanyDTO, GetCompany>(_companyService.Get(id));
+            //if (company == null)
+            //    return NotFound();
+
+            return NoContent();
         }
     }
 }

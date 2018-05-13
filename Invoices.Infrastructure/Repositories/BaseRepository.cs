@@ -6,13 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Dapper;
 using System.Linq;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Invoices.Infrastructure.Repositories
 {
     public class BaseRespository
     {
         IConfiguration _configuration;
-        IDbConnection _connection;
 
         public BaseRespository()
         {
@@ -25,26 +25,35 @@ namespace Invoices.Infrastructure.Repositories
         }
 
 
-        protected List<T> Query<T>(string sql, object parameters = null)
+        protected async Task<IEnumerable<T>> Query<T>(string sql, object parameters = null)
         {
             using (var connection = CreateConnection())
             {
-                return connection.Query<T>(sql, parameters).ToList();
+                return await connection.QueryAsync<T>(sql, parameters);
             }
         }
 
-        protected int Execute(string sql, object parameters = null)
+        protected async Task<T> QuerySingle<T>(string sql, object parameters = null)
         {
             using (var connection = CreateConnection())
             {
-                return connection.Execute(sql, parameters);
+                var result = await connection.QuerySingleAsync<T>(sql, parameters);
+
+                return result;
+            }
+        }
+
+        protected async Task<int> Execute(string sql, object parameters = null)
+        {
+            using (var connection = CreateConnection())
+            {
+                return await connection.ExecuteAsync(sql, parameters);
             }
         }
 
         private IDbConnection CreateConnection()
         {
-            var connection = new SqlConnection(this.GetConnectionString());
-            return connection;
+            return new SqlConnection(this.GetConnectionString());
         }
 
         private string GetConnectionString()

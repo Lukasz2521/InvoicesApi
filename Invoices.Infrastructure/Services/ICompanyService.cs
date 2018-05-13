@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Invoices.Infrastructure.DTO;
+using System.Threading.Tasks;
 
 namespace Invoices.Infrastructure.Services
 {
     public interface ICompanyService
     {
-       CompanyDTO Get(int id);
+        Task<CompanyDTO> Get(int id);
 
-       void Add(CompanyDTO company);
+        Task Add(CompanyDTO company);
     }
 }

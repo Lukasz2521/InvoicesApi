@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Invoices.Core.Domain;
+using System.Threading.Tasks;
 
 namespace Invoices.Core.Repositories
 {
     public interface ICompanyRepository
     {
-        Company Get(int id);
+        Task<Company> Get(int id);
 
-        void Add(Company company);
+        Task Add(Company company);
     }
 }

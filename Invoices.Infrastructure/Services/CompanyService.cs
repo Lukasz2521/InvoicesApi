@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text;
 using Invoices.Infrastructure.DTO;
@@ -19,15 +20,17 @@ namespace Invoices.Infrastructure.Services
             _mapper = mapper;
         }
 
-        public void Add(CompanyDTO company)
+        public async Task Add(CompanyDTO company)
         {
             if(company != null)
-                _companyRepository.Add(_mapper.Map<CompanyDTO, Company>(company));
+                await _companyRepository.Add(_mapper.Map<CompanyDTO, Company>(company));
         }
 
-        public CompanyDTO Get(int id)
+        public async Task<CompanyDTO> Get(int id)
         {
-            throw new NotImplementedException();
+            var company = await _companyRepository.Get(id); 
+
+            return _mapper.Map<Company, CompanyDTO>(company);
         }
     }
 }
