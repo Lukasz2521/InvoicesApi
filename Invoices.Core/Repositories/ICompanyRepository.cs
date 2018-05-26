@@ -8,8 +8,8 @@ namespace Invoices.Core.Repositories
 {
     public interface ICompanyRepository
     {
-        Task<Company> Get(int id);
+        Task<Company> GetAsync(int id);
 
-        Task Add(Company company);
+        Task AddAsync(Company company);
     }
 }

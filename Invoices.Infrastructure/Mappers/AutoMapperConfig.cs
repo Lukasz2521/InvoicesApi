@@ -5,6 +5,7 @@ using System.Text;
 using Invoices.Core.Domain;
 using Invoices.Infrastructure.DTO;
 using Invoices.Infrastructure.Commands.Company;
+using Invoices.Infrastructure.Commands.User;
 
 namespace Invoices.Infrastructure.Mappers
 {
@@ -16,6 +17,8 @@ namespace Invoices.Infrastructure.Mappers
                 cfg.CreateMap<Product, ProductDTO>();
                 cfg.CreateMap<Contractor, ContractorDTO>();
                 cfg.CreateMap<CreateCompany, CompanyDTO>();
+                cfg.CreateMap<CreateUser, UserDTO>();
+                cfg.CreateMap<User, UserDTO>();
             })
             .CreateMapper();
     }

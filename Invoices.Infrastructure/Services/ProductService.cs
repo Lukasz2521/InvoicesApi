@@ -6,7 +6,7 @@ using AutoMapper;
 
 namespace Invoices.Infrastructure.Services
 {
-    class ProductService : IProductService
+    sealed class ProductService : IProductService
     {
         private readonly IMapper _mapper;
 

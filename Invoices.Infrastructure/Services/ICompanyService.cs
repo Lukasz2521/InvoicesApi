@@ -8,8 +8,8 @@ namespace Invoices.Infrastructure.Services
 {
     public interface ICompanyService
     {
-        Task<CompanyDTO> Get(int id);
+        Task<CompanyDTO> GetAsync(int id);
 
-        Task Add(CompanyDTO company);
+        Task AddAsync(CompanyDTO company);
     }
 }

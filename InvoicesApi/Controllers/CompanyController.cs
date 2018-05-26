@@ -24,20 +24,19 @@ namespace Invoices.Api.Controllers
             _companyService = companyService;
             _mapper = mapper;
             _configuration = configuration;
-
         }
 
         [HttpPost]
         [Route("company/add")]
         public async Task Post([FromBody]CreateCompany company)
         {
-            await _companyService.Add( _mapper.Map<CreateCompany, CompanyDTO>(company));
+            await _companyService.AddAsync( _mapper.Map<CreateCompany, CompanyDTO>(company));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var company = await _companyService.Get(id);
+            var company = await _companyService.GetAsync(id);
             if (company == null)                                                                                                 
                 return NotFound();
 

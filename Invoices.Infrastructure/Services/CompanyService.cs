@@ -9,7 +9,7 @@ using AutoMapper;
 
 namespace Invoices.Infrastructure.Services
 {
-    public class CompanyService : ICompanyService
+    public sealed class CompanyService : ICompanyService
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IMapper _mapper;
@@ -20,15 +20,15 @@ namespace Invoices.Infrastructure.Services
             _mapper = mapper;
         }
 
-        public async Task Add(CompanyDTO company)
+        public async Task AddAsync(CompanyDTO company)
         {
             if(company != null)
-                await _companyRepository.Add(_mapper.Map<CompanyDTO, Company>(company));
+                await _companyRepository.AddAsync(_mapper.Map<CompanyDTO, Company>(company));
         }
 
-        public async Task<CompanyDTO> Get(int id)
+        public async Task<CompanyDTO> GetAsync(int id)
         {
-            var company = await _companyRepository.Get(id); 
+            var company = await _companyRepository.GetAsync(id); 
 
             return _mapper.Map<Company, CompanyDTO>(company);
         }

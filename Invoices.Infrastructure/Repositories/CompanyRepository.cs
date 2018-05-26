@@ -11,7 +11,7 @@ namespace Invoices.Infrastructure.Repositories
 {
     public class CompanyRepository : BaseRespository, ICompanyRepository
     {
-        public async Task Add(Company company)
+        public async Task AddAsync(Company company)
         {
            await Execute("INSERT INTO Company(Nip, CompanyName) VALUES(" +
                "@Nip, @CompanyName, @Adress, @Email, @Tel, " +
@@ -31,7 +31,7 @@ namespace Invoices.Infrastructure.Repositories
                });
         }
 
-        public async Task<Company> Get(int id)
+        public async Task<Company> GetAsync(int id)
         {
             var company = await QuerySingle<Company>("SELECT * FROM Company WHERE id = @id", new { id });
 

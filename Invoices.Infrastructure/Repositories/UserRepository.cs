@@ -7,11 +7,24 @@ using Invoices.Core.Repositories;
 
 namespace Invoices.Infrastructure.Repositories
 {
-    class UserRepository : BaseRespository, IUserRepository
+    public class UserRepository : BaseRespository, IUserRepository
     {
-        public Task Create(User user)
+        public async Task CreateAsync(User user)
         {
-            throw new NotImplementedException();
+            await Execute("INSERT INTO Users(Username, PasswordHash, PasswordSalt) VALUES(@Username, @PasswordHash, @PasswordSalt)",
+            new
+            {
+                Username = user.Username,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt
+            });
+        }
+
+        public async Task<User> GetAsync(string username)
+        {
+            var user = await QuerySingle<User>("SELECT * FROM Users WHERE Username = @Username", new { Username = username });
+
+            return user;
         }
     }
 }

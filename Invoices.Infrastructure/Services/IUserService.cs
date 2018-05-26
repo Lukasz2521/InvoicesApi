@@ -1,4 +1,5 @@
-﻿using Invoices.Infrastructure.DTO;
+﻿using Invoices.Core.Domain;
+using Invoices.Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Invoices.Infrastructure.Services
 {
-    interface IUserService
+    public interface IUserService
     {
-        Task Create(UserDTO user);
+        Task CreateAsync(UserDTO user);
+
+        Task<UserDTO> AuthenticateAsync(string username, string password);
     }
 }

@@ -8,6 +8,8 @@ namespace Invoices.Core.Repositories
 {
     public interface IUserRepository
     {
-        Task Create(User user);
+        Task CreateAsync(User user);
+
+        Task<User> GetAsync(string username);
     }
 }

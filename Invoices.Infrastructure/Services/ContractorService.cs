@@ -5,7 +5,7 @@ using Invoices.Infrastructure.DTO;
 
 namespace Invoices.Infrastructure.Services
 {
-    class ContractorService : IContractorService
+    public sealed class ContractorService : IContractorService
     {
         public bool Add(int SellerId, int ContractorId)
         {
